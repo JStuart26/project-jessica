@@ -14,9 +14,11 @@ done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
+source "$PROJECT_ROOT/commands/help.sh"
+
 ###############################################################################
 # Project Jessica
-# Version: 0.2.0
+# Version: 0.3.0
 #
 # Purpose:
 #   Prepare the development workspace and verify that the environment
@@ -32,7 +34,7 @@ show_banner() {
     fi
 
     echo "=================================================="
-    echo "             PROJECT JESSICA v0.2.0"
+    echo "             PROJECT JESSICA v0.3.0"
     echo "=================================================="
     echo
 }
@@ -340,20 +342,20 @@ dashboard() {
     finish
 }
 
-show_help() {
-    echo
-    echo "PROJECT JESSICA COMMANDS"
-    echo
-    echo "  jessica              Show the project dashboard"
-    echo "  jessica next         Update a project's next step"
-    echo "  jessica note         Add a timestamped project note"
-    echo "  jessica note ID TEXT Add a note without the picker"
-    echo "  jessica done         Complete and archive the next step"
-    echo "  jessica history      Show a project's completed-task history"
-    echo "  jessica projects     Show the project dashboard"
-    echo "  jessica help         Show this command list"
-    echo
-}
+#show_help() {
+#    echo
+#    echo "PROJECT JESSICA COMMANDS"
+#    echo
+#    echo "  jessica              Show the project dashboard"
+#    echo "  jessica next         Update a project's next step"
+#    echo "  jessica note         Add a timestamped project note"
+#    echo "  jessica note ID TEXT Add a note without the picker"
+#    echo "  jessica done         Complete and archive the next step"
+#    echo "  jessica history      Show a project's completed-task history"
+#    echo "  jessica projects     Show the project dashboard"
+#    echo "  jessica help         Show this command list"
+#    echo
+#}
 
 case "${1:-}" in
     "")
