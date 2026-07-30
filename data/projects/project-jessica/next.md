@@ -1,1 +1,1 @@
-Finish current step
+Add more commands
