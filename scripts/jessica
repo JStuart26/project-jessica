@@ -15,6 +15,8 @@ SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 source "$PROJECT_ROOT/commands/help.sh"
+source "$PROJECT_ROOT/commands/next.sh"
+source "$PROJECT_ROOT/commands/note.sh"
 
 ###############################################################################
 # Project Jessica
@@ -209,27 +211,27 @@ finish() {
     echo "=================================================="
 }
 
-update_next_step() {
-    if ! select_project; then
-        return 1
-    fi
-
-    NEXT_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/next.md"
-
-    echo
-    read -r -p "Enter the next step for $SELECTED_NAME: " NEW_NEXT_STEP
-
-    if [ -z "$NEW_NEXT_STEP" ]; then
-        echo "❌ Next step cannot be empty."
-        return 1
-    fi
-
-    printf '%s\n' "$NEW_NEXT_STEP" > "$NEXT_FILE"
-
-    echo
-    echo "✅ Next step updated for $SELECTED_NAME."
-    echo "   $NEW_NEXT_STEP"
-}
+#update_next_step() {
+#    if ! select_project; then
+#        return 1
+#    fi
+#
+#    NEXT_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/next.md"
+#
+#    echo
+#    read -r -p "Enter the next step for $SELECTED_NAME: " NEW_NEXT_STEP
+#
+#    if [ -z "$NEW_NEXT_STEP" ]; then
+#        echo "❌ Next step cannot be empty."
+#        return 1
+#    fi
+#
+#    printf '%s\n' "$NEW_NEXT_STEP" > "$NEXT_FILE"
+#
+#    echo
+#    echo "✅ Next step updated for $SELECTED_NAME."
+#    echo "   $NEW_NEXT_STEP"
+#}
 
 find_project_by_id() {
     SEARCH_ID="$1"
@@ -246,48 +248,48 @@ find_project_by_id() {
     return 1
 }
 
-add_note() {
-    REQUESTED_ID="$1"
-
-    if [ -n "$REQUESTED_ID" ]; then
-        shift
-        NOTE_TEXT="$*"
-
-        if ! find_project_by_id "$REQUESTED_ID"; then
-            echo "❌ Unknown project: $REQUESTED_ID"
-            echo
-            echo "Known projects:"
-            while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
-            do
-                [ -z "$NAME" ] && continue
-                echo "   $PROJECT_ID - $NAME"
-            done < "$PROJECT_ROOT/data/projects.conf"
-            return 1
-        fi
-    else
-        if ! select_project; then
-            return 1
-        fi
-    fi
-
-    NOTES_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/notes.md"
-
-    if [ -z "$NOTE_TEXT" ]; then
-        echo
-        read -r -p "Enter a note for $SELECTED_NAME: " NOTE_TEXT
-    fi
-
-    if [ -z "$NOTE_TEXT" ]; then
-        echo "❌ Note cannot be empty."
-        return 1
-    fi
-
-    printf -- '- %s: %s\n' "$(date '+%Y-%m-%d %H:%M')" "$NOTE_TEXT" >> "$NOTES_FILE"
-
-    echo
-    echo "✅ Note added for $SELECTED_NAME."
-    echo "   $NOTE_TEXT"
-}
+#add_note() {
+#    REQUESTED_ID="$1"
+#
+#    if [ -n "$REQUESTED_ID" ]; then
+#        shift
+#        NOTE_TEXT="$*"
+#
+#        if ! find_project_by_id "$REQUESTED_ID"; then
+#            echo "❌ Unknown project: $REQUESTED_ID"
+#            echo
+#            echo "Known projects:"
+#            while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
+#            do
+#                [ -z "$NAME" ] && continue
+#                echo "   $PROJECT_ID - $NAME"
+#            done < "$PROJECT_ROOT/data/projects.conf"
+#            return 1
+#        fi
+#    else
+#        if ! select_project; then
+#            return 1
+#        fi
+#    fi
+#
+#    NOTES_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/notes.md"
+#
+#    if [ -z "$NOTE_TEXT" ]; then
+#        echo
+#        read -r -p "Enter a note for $SELECTED_NAME: " NOTE_TEXT
+#    fi
+#
+#    if [ -z "$NOTE_TEXT" ]; then
+#        echo "❌ Note cannot be empty."
+#        return 1
+#    fi
+#
+#    printf -- '- %s: %s\n' "$(date '+%Y-%m-%d %H:%M')" "$NOTE_TEXT" >> "$NOTES_FILE"
+#
+#    echo
+#    echo "✅ Note added for $SELECTED_NAME."
+#    echo "   $NOTE_TEXT"
+#}
 
 complete_next_step() {
     if ! select_project; then
