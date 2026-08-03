@@ -1,1 +1,5 @@
 - 2026-07-29 12:54: Testing
+- 2026-08-03 11:53: Remeber to update version
+- 2026-08-03 12:23: Remember works as of 12:23 8-3-26
+- 2026-08-03 12:24: Testing the remember alias
+- 2026-08-03 14:06: Test add fuction

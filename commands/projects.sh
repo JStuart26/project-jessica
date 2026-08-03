@@ -73,3 +73,58 @@ show_projects() {
 
      echo
 }
+
+select_project() {
+    echo
+    echo "Choose a project:"
+    echo
+
+    PROJECT_IDS=()
+    PROJECT_NAMES=()
+
+    COUNT=1
+
+    while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
+    do
+        [ -z "$NAME" ] && continue
+        echo "   $COUNT) $NAME"
+
+        PROJECT_NAMES+=("$NAME")
+        PROJECT_IDS+=("$PROJECT_ID")
+
+        COUNT=$((COUNT + 1))
+    done < "$PROJECT_ROOT/data/projects.conf"
+
+    echo
+    read -r -p "Project number: " SELECTION
+
+    if ! [[ "$SELECTION" =~ ^[0-9]+$ ]]; then
+        echo "❌ Invalid project selection."
+        return 1
+    fi
+
+    INDEX=$((SELECTION - 1))
+
+    if [ "$INDEX" -lt 0 ] || [ "$INDEX" -ge "${#PROJECT_IDS[@]}" ]; then
+        echo "❌ Invalid project selection."
+        return 1
+    fi
+
+    SELECTED_NAME="${PROJECT_NAMES[$INDEX]}"
+    SELECTED_ID="${PROJECT_IDS[$INDEX]}"
+}
+
+find_project_by_id() {
+    SEARCH_ID="$1"
+
+    while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
+    do
+        if [ "$PROJECT_ID" = "$SEARCH_ID" ]; then
+            SELECTED_NAME="$NAME"
+            SELECTED_ID="$PROJECT_ID"
+            return 0
+        fi
+    done < "$PROJECT_ROOT/data/projects.conf"
+
+    return 1
+}

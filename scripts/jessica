@@ -15,11 +15,14 @@ SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 source "$PROJECT_ROOT/commands/help.sh"
+source "$PROJECT_ROOT/commands/dashboard.sh"
 source "$PROJECT_ROOT/commands/next.sh"
 source "$PROJECT_ROOT/commands/note.sh"
 source "$PROJECT_ROOT/commands/done.sh"
 source "$PROJECT_ROOT/commands/history.sh"
 source "$PROJECT_ROOT/commands/projects.sh"
+source "$PROJECT_ROOT/commands/remember.sh"
+source "$PROJECT_ROOT/commands/add.sh"
 
 ###############################################################################
 # Project Jessica
@@ -32,335 +35,6 @@ source "$PROJECT_ROOT/commands/projects.sh"
 # Author:
 #   Justin Stuart
 ###############################################################################
-
-show_banner() {
-    if [ -t 1 ]; then
-        clear
-    fi
-
-    echo "=================================================="
-    echo "             PROJECT JESSICA v0.3.0"
-    echo "=================================================="
-    echo
-}
-
-show_greeting() {
-
-    HOUR=$(date +%H)
-
-    if [ "$HOUR" -lt 12 ]; then
-        GREETING="Good morning"
-    elif [ "$HOUR" -lt 18 ]; then
-        GREETING="Good afternoon"
-    else
-        GREETING="Good evening"
-    fi
-
-    echo "👋 $GREETING, Justin!"
-    echo
-}
-
-show_system_info() {
-    echo "Checking development environment..."
-    echo
-
-    echo "🖥️  Operating System : $(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"')"
-    echo "👤 User             : $(whoami)"
-    echo "🕒 Time             : $(date '+%A %b %d %I:%M %p')"
-    echo
-}
-
-check_git() {
-    echo "Checking Git..."
-
-    if command -v git >/dev/null; then
-        echo "✅ Git Installed"
-    else
-        echo "❌ Git Missing"
-    fi
-
-    echo
-}
-
-check_docker() {
-    echo "Checking Docker..."
-
-    if command -v docker >/dev/null; then
-        echo "✅ Docker Installed"
-    else
-        echo "❌ Docker Missing"
-    fi
-
-    echo
-}
-
-#show_project_status() {
-#    NAME="$1"
-#    PROJECT_PATH="$2"
-#    TYPE="$3"
-#    PROJECT_ID="$4"
-#
-#    echo
-#    echo "📁 $NAME"
-#    echo "   Path   : $PROJECT_PATH"
-#    echo "   Type   : $TYPE"
-#
-#    if [ ! -d "$PROJECT_PATH" ]; then
-#        echo "   Status : ❌ Folder not found"
-#        return
-#    fi
-#
-#    if [ ! -d "$PROJECT_PATH/.git" ]; then
-#        echo "   Status : ⚪ Not a Git repository"
-#        return
-#    fi
-#
-#    BRANCH=$(git -C "$PROJECT_PATH" branch --show-current)
-#
-#    if [ -z "$(git -C "$PROJECT_PATH" status --porcelain)" ]; then
-#        STATUS="✅ Clean"
-#    else
-#        STATUS="🟡 Uncommitted changes"
-#    fi
-#
-#    UPSTREAM=$(git -C "$PROJECT_PATH" rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>/dev/null)
-#
-#    if [ -z "$UPSTREAM" ]; then
-#        REMOTE_STATUS="⚪ No upstream configured"
-#    else
-#        COUNTS=$(git -C "$PROJECT_PATH" rev-list --left-right --count "$UPSTREAM...HEAD")
-#        BEHIND=$(echo "$COUNTS" | awk '{print $1}')
-#        AHEAD=$(echo "$COUNTS" | awk '{print $2}')
-#
-#        if [ "$AHEAD" -eq 0 ] && [ "$BEHIND" -eq 0 ]; then
-#            REMOTE_STATUS="✅ Up to date"
-#        elif [ "$AHEAD" -gt 0 ] && [ "$BEHIND" -eq 0 ]; then
-#            REMOTE_STATUS="⬆ $AHEAD commit(s) ahead"
-#        elif [ "$AHEAD" -eq 0 ] && [ "$BEHIND" -gt 0 ]; then
-#            REMOTE_STATUS="⬇ $BEHIND commit(s) behind"
-#        else
-#            REMOTE_STATUS="↕ $AHEAD ahead, $BEHIND behind"
-#        fi
-#    fi
-#
-#    NEXT_FILE="$PROJECT_ROOT/data/projects/$PROJECT_ID/next.md"
-#
-#    if [ -s "$NEXT_FILE" ]; then
-#        NEXT_STEP=$(head -n 1 "$NEXT_FILE")
-#    else
-#        NEXT_STEP="No next step recorded"
-#    fi
-#
-#    echo "   Branch : $BRANCH"
-#    echo "   Status : $STATUS"
-#    echo "   Remote : $REMOTE_STATUS"
-#    echo "   Next   : $NEXT_STEP"
-#}
-#
-#show_projects() {
-#    echo "============= PROJECTS ============="
-#
-#    while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
-#    do
-#        show_project_status "$NAME" "$PROJECT_PATH" "$TYPE" "$PROJECT_ID"
-#    done < "$PROJECT_ROOT/data/projects.conf"
-#
-#    echo
-#}
-
-select_project() {
-    echo
-    echo "Choose a project:"
-    echo
-
-    PROJECT_IDS=()
-    PROJECT_NAMES=()
-
-    COUNT=1
-
-    while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
-    do
-        [ -z "$NAME" ] && continue
-        echo "   $COUNT) $NAME"
-
-        PROJECT_NAMES+=("$NAME")
-        PROJECT_IDS+=("$PROJECT_ID")
-
-        COUNT=$((COUNT + 1))
-    done < "$PROJECT_ROOT/data/projects.conf"
-
-    echo
-    read -r -p "Project number: " SELECTION
-
-    if ! [[ "$SELECTION" =~ ^[0-9]+$ ]]; then
-        echo "❌ Invalid project selection."
-        return 1
-    fi
-
-    INDEX=$((SELECTION - 1))
-
-    if [ "$INDEX" -lt 0 ] || [ "$INDEX" -ge "${#PROJECT_IDS[@]}" ]; then
-        echo "❌ Invalid project selection."
-        return 1
-    fi
-
-    SELECTED_NAME="${PROJECT_NAMES[$INDEX]}"
-    SELECTED_ID="${PROJECT_IDS[$INDEX]}"
-}
-
-finish() {
-    echo "=================================================="
-    echo " Jessica is ready to code."
-    echo "=================================================="
-}
-
-#update_next_step() {
-#    if ! select_project; then
-#        return 1
-#    fi
-#
-#    NEXT_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/next.md"
-#
-#    echo
-#    read -r -p "Enter the next step for $SELECTED_NAME: " NEW_NEXT_STEP
-#
-#    if [ -z "$NEW_NEXT_STEP" ]; then
-#        echo "❌ Next step cannot be empty."
-#        return 1
-#    fi
-#
-#    printf '%s\n' "$NEW_NEXT_STEP" > "$NEXT_FILE"
-#
-#    echo
-#    echo "✅ Next step updated for $SELECTED_NAME."
-#    echo "   $NEW_NEXT_STEP"
-#}
-
-find_project_by_id() {
-    SEARCH_ID="$1"
-
-    while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
-    do
-        if [ "$PROJECT_ID" = "$SEARCH_ID" ]; then
-            SELECTED_NAME="$NAME"
-            SELECTED_ID="$PROJECT_ID"
-            return 0
-        fi
-    done < "$PROJECT_ROOT/data/projects.conf"
-
-    return 1
-}
-
-#add_note() {
-#    REQUESTED_ID="$1"
-#
-#    if [ -n "$REQUESTED_ID" ]; then
-#        shift
-#        NOTE_TEXT="$*"
-#
-#        if ! find_project_by_id "$REQUESTED_ID"; then
-#            echo "❌ Unknown project: $REQUESTED_ID"
-#            echo
-#            echo "Known projects:"
-#            while IFS="|" read -r NAME PROJECT_PATH TYPE PROJECT_ID
-#            do
-#                [ -z "$NAME" ] && continue
-#                echo "   $PROJECT_ID - $NAME"
-#            done < "$PROJECT_ROOT/data/projects.conf"
-#            return 1
-#        fi
-#    else
-#        if ! select_project; then
-#            return 1
-#        fi
-#    fi
-#
-#    NOTES_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/notes.md"
-#
-#    if [ -z "$NOTE_TEXT" ]; then
-#        echo
-#        read -r -p "Enter a note for $SELECTED_NAME: " NOTE_TEXT
-#    fi
-#
-#    if [ -z "$NOTE_TEXT" ]; then
-#        echo "❌ Note cannot be empty."
-#        return 1
-#    fi
-#
-#    printf -- '- %s: %s\n' "$(date '+%Y-%m-%d %H:%M')" "$NOTE_TEXT" >> "$NOTES_FILE"
-#
-#    echo
-#    echo "✅ Note added for $SELECTED_NAME."
-#    echo "   $NOTE_TEXT"
-#}
-
-#complete_next_step() {
-#    if ! select_project; then
-#        return 1
-#    fi
-#
-#    NEXT_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/next.md"
-#    HISTORY_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/history.md"
-#
-#    if [ ! -s "$NEXT_FILE" ]; then
-#        echo
-#        echo "⚪ No next step recorded for $SELECTED_NAME."
-#        return 1
-#    fi
-#
-#    COMPLETED_STEP=$(head -n 1 "$NEXT_FILE")
-#    printf -- '- %s: %s\n' "$(date '+%Y-%m-%d %H:%M')" "$COMPLETED_STEP" >> "$HISTORY_FILE"
-#    : > "$NEXT_FILE"
-#
-#    echo
-#    echo "✅ Completed next step for $SELECTED_NAME."
-#    echo "   $COMPLETED_STEP"
-#}
-
-#show_history() {
-#    if ! select_project; then
-#        return 1
-#    fi
-#
-#    HISTORY_FILE="$PROJECT_ROOT/data/projects/$SELECTED_ID/history.md"
-#
-#    echo
-#    echo "History for $SELECTED_NAME"
-#    echo "----------------------------------------"
-#
-#    if [ -s "$HISTORY_FILE" ]; then
-#        cat "$HISTORY_FILE"
-#    else
-#        echo "No completed tasks recorded yet."
-#    fi
-#
-#    echo
-#}
-
-dashboard() {
-    show_banner
-    show_greeting
-    show_system_info
-    check_git
-    check_docker
-    show_projects
-    finish
-}
-
-#show_help() {
-#    echo
-#    echo "PROJECT JESSICA COMMANDS"
-#    echo
-#    echo "  jessica              Show the project dashboard"
-#    echo "  jessica next         Update a project's next step"
-#    echo "  jessica note         Add a timestamped project note"
-#    echo "  jessica note ID TEXT Add a note without the picker"
-#    echo "  jessica done         Complete and archive the next step"
-#    echo "  jessica history      Show a project's completed-task history"
-#    echo "  jessica projects     Show the project dashboard"
-#    echo "  jessica help         Show this command list"
-#    echo
-#}
 
 case "${1:-}" in
     "")
@@ -391,6 +65,16 @@ case "${1:-}" in
     history)
         show_history
         ;;
+
+    remember)
+	shift
+	remember "$@"
+	;;
+
+    add)
+	shift
+        add "$@"
+	;;
 
     *)
         echo "❌ Unknown command: $1"
