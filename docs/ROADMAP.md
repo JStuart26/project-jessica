@@ -67,6 +67,15 @@ Last Updated: 2026-08-04
 - [ ] Record timestamps and session duration
 - [ ] Add `docs/SESSION_HISTORY.md`
 
+Synchronization
+
+☐ Sync branding
+☐ Sync documentation
+☐ Sync configuration
+☐ Sync VS Code settings
+☐ Backup project
+☐ Restore project
+
 ---
 
 ## Version 0.7.0 — Intelligence
