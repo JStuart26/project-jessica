@@ -32,3 +32,11 @@ Jessica should be:
 ## Guiding Principle
 
 Build one useful feature at a time while keeping accessibility and future distribution in mind.
+
+## Vision
+
+Jessica exists because I had a vision to create a program that could help not just me, but anyone who needs her.
+
+She is being built to teach, organize, automate, and assist while helping people understand technology instead of simply using it.
+
+Project Jessica is my journey toward building software that makes people's lives easier through knowledge, automation, and AI.

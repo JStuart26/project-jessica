@@ -14,6 +14,8 @@ done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
+source "$PROJECT_ROOT/lib/ui.sh"
+
 source "$PROJECT_ROOT/commands/help.sh"
 source "$PROJECT_ROOT/commands/dashboard.sh"
 source "$PROJECT_ROOT/commands/next.sh"
@@ -24,9 +26,10 @@ source "$PROJECT_ROOT/commands/projects.sh"
 source "$PROJECT_ROOT/commands/remember.sh"
 source "$PROJECT_ROOT/commands/add.sh"
 
+
 ###############################################################################
 # Project Jessica
-# Version: 0.3.0
+# Version: 0.5.0
 #
 # Purpose:
 #   Prepare the development workspace and verify that the environment

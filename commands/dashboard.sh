@@ -1,15 +1,15 @@
 #!bin/bash
 
-show_banner() {
-    if [ -t 1 ]; then
-        clear
-    fi
-
-    echo "=================================================="
-    echo "             PROJECT JESSICA v0.3.0"
-    echo "=================================================="
-    echo
-}
+#show_banner() {
+ #   if [ -t 1 ]; then
+ #      clear
+ #   fi
+#
+#    echo "=================================================="
+#    echo "             PROJECT JESSICA v0.4.0"
+#    echo "=================================================="
+#    echo
+#}
 
 show_greeting() {
 
@@ -61,13 +61,13 @@ check_docker() {
 }
 
 finish() {
-    echo "=================================================="
-    echo " Jessica is ready to code."
-    echo "=================================================="
+    echo "╭──────────────────────────────────────────────────╮"
+    echo "             Ready to start coding! 🚀"
+    echo "╰──────────────────────────────────────────────────╯"
 }
 
 dashboard() {
-    show_banner
+    ui_header
     show_greeting
     show_system_info
     check_git
