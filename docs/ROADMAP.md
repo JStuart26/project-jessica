@@ -1,5 +1,12 @@
 # Jessica Roadmap
 
+This roadmap evolves as Project Jessica grows.
+
+Earlier roadmap versions are preserved in Git history and represent how the project's vision expanded over time.
+
+Current Roadmap Version: v2
+Last Updated: 2026-08-04
+
 ## Version 0.1
 - [ ] Startup dashboard
 - [ ] Environment checks

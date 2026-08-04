@@ -40,3 +40,6 @@ Jessica exists because I had a vision to create a program that could help not ju
 She is being built to teach, organize, automate, and assist while helping people understand technology instead of simply using it.
 
 Project Jessica is my journey toward building software that makes people's lives easier through knowledge, automation, and AI.
+
+v0.5.0
+Foundation & Identity
