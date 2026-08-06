@@ -76,7 +76,24 @@ show_session_history_service() {
     echo "📚 Session History"
     echo
 
-    cat "$HISTORY_FILE"
+    tac "$HISTORY_FILE" | while IFS='|' read -r START_TIME END_TIME DURATION NOTE; do
+        START_TIME="$(echo "$START_TIME" | xargs)"
+        END_TIME="$(echo "$END_TIME" | xargs)"
+        DURATION="$(echo "$DURATION" | xargs)"
+        NOTE="$(echo "$NOTE" | xargs)"
+
+        echo "🗓️  Started:  $START_TIME"
+        echo "🏁 Ended:    $END_TIME"
+        echo "⏱️  Duration: $DURATION"
+
+        if [ -n "$NOTE" ]; then
+        echo "📝 Note:     $NOTE"
+        fi
+
+        echo
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo
+    done
 
     TOTAL_SESSIONS="$(wc -l < "$HISTORY_FILE")"
 
