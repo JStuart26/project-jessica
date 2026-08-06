@@ -62,3 +62,17 @@ end_session_service() {
 
     echo "❎ Session ended at $SESSION_END_TIME"
 }
+
+show_session_history_service() {
+    HISTORY_FILE="$PROJECT_ROOT/data/sessions/history.log"
+
+    if [ ! -f "$HISTORY_FILE" ]; then
+        echo "📭 No session history yet."
+        return 0
+    fi
+
+    echo "📚 Session History"
+    echo
+
+    cat "$HISTORY_FILE"
+}

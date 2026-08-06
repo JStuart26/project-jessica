@@ -14,3 +14,8 @@ end_session_service() {
     source "$PROJECT_ROOT/services/session/session.sh"
     end_session_service
 }
+
+show_session_history() {
+    source "$PROJECT_ROOT/services/session/session.sh"
+    show_session_history_service
+}

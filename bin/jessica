@@ -82,6 +82,10 @@ case "${1:-}" in
     end_session_service
     ;;
 
+    shistory)
+    show_session_history
+    ;;
+
     *)
         echo "❌ Unknown command: $1"
         show_help
