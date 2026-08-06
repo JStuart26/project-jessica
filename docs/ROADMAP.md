@@ -52,6 +52,21 @@ Last Updated: 2026-08-04
 
 ---
 
+## Version 0.5.5 — Secure Remote Access
+
+- [x] Install Tailscale on `js-server`
+- [x] Install Tailscale on MacBook
+- [x] Connect iPhone and iPad Mini
+- [x] Rename Tailscale devices
+- [x] Create the `js-server` SSH alias
+- [x] Connect VS Code through Tailscale
+- [x] Update Project Jessica.app to use `js-server`
+- [x] Confirm Project Jessica launches successfully
+- [ ] Test from outside the home network
+- [ ] Document the remote-access workflow
+
+---
+
 ## Version 0.6.0 — Awareness
 
 - [ ] Improve dashboard
@@ -75,6 +90,18 @@ Synchronization
 ☐ Sync VS Code settings
 ☐ Backup project
 ☐ Restore project
+
+---
+
+## Version 0.6.5 — Mobile Development
+
+- [ ] Configure iPad SSH access through Tailscale
+- [ ] Test terminal editing from iPad
+- [ ] Test Git commits and pushes from iPad
+- [ ] Evaluate Blink Shell or another SSH client
+- [ ] Evaluate browser-based VS Code
+- [ ] Configure automatic connection to `js-server`
+- [ ] Configure automatic Jessica startup
 
 ---
 

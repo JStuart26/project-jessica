@@ -2,45 +2,38 @@
 
 ## Date
 
-2026-08-04
+2026-08-06
 
 ## Current Version
 
-v0.5.0 — Foundation & Identity
+v0.5.5 — Secure Remote Access
 
-## Current Goal
+## Completed
 
-Finish documentation and prepare the v0.5.0 release.
+- Installed Tailscale on `js-server`
+- Connected MacBook, iPhone, and iPad Mini
+- Renamed devices using the `js-` naming convention
+- Created the `js-server` SSH alias
+- Confirmed SSH access through Tailscale
+- Updated VS Code Remote SSH to use `js-server`
+- Updated Project Jessica.app to launch through Tailscale
+- Confirmed the Jessica launcher works successfully
 
-## Completed This Session
+## Remaining Test
 
-- Created the VS Code Remote SSH workspace.
-- Configured the terminal working directory.
-- Configured automatic Jessica startup.
-- Created the macOS Project Jessica launcher.
-- Created the official Jessica logo.
-- Added and tested `lib/ui.sh`.
-- Replaced the old dashboard banner with `ui_header()`.
-- Created documentation files.
-- Updated the project roadmap.
-
-## Current Git State
-
-Changes have not yet been committed for the v0.5.0 release.
-
-## Next Step
-
-Review the documentation, run syntax checks, test Jessica, commit the changes, push them, and create the `v0.5.0` Git tag.
+Test the complete workflow while away from the home network.
 
 ## Next Version
 
 v0.6.0 — Awareness
 
-Planned features:
+## Next Task
 
-- Session start, status, and end commands
-- Session timestamps and duration
-- `docs/SESSION_HISTORY.md`
-- `jessica context`
-- Improved dashboard and help screen
-- Configuration and theme support
+Build the session manager:
+
+- `jessica start`
+- `jessica status`
+- `jessica stop`
+- Session timestamps
+- Session duration
+- Session history
