@@ -90,8 +90,11 @@ show_session_history_service() {
     ' "$HISTORY_FILE"
 )"
 
+    TOTAL_HOURS=$((TOTAL_MINUTES / 60))
+    REMAINING_MINUTES=$((TOTAL_MINUTES % 60))
+
     echo
     echo "📊 Summary"
     echo "   Sessions: $TOTAL_SESSIONS"
-    echo "   Total time: ${TOTAL_MINUTES} minute(s)"
+    echo "   Total time: ${TOTAL_HOURS} hour(s), ${REMAINING_MINUTES} minute(s)"
 }
