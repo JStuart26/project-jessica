@@ -12,7 +12,7 @@ show_session_status() {
 
 end_session_service() {
     source "$PROJECT_ROOT/services/session/session.sh"
-    end_session_service
+    end_session_service "$@"
 }
 
 show_session_history() {

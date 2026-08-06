@@ -79,7 +79,8 @@ case "${1:-}" in
     ;;
 
     end)
-    end_session_service
+    shift
+    end_session_service "$@"
     ;;
 
     shistory)

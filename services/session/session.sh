@@ -36,6 +36,8 @@ show_session_status_service() {
 }
 
 end_session_service() {
+    SESSION_NOTE="$*"
+
     SESSION_FILE="$PROJECT_ROOT/data/state/session.conf"
     HISTORY_FILE="$PROJECT_ROOT/data/sessions/history.log"
 
@@ -55,8 +57,8 @@ end_session_service() {
 
     mkdir -p "$(dirname "$HISTORY_FILE")"
 
-    echo "$SESSION_START_TIME | $SESSION_END_TIME | ${DURATION_MINUTES} minute(s)" \
-        >> "$HISTORY_FILE"
+    echo "$SESSION_START_TIME | $SESSION_END_TIME | ${DURATION_MINUTES} minute(s) | $SESSION_NOTE" \
+    >> "$HISTORY_FILE"
 
     rm "$SESSION_FILE"
 
