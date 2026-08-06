@@ -75,4 +75,23 @@ show_session_history_service() {
     echo
 
     cat "$HISTORY_FILE"
+
+    TOTAL_SESSIONS="$(wc -l < "$HISTORY_FILE")"
+
+    TOTAL_MINUTES="$(
+    awk -F'|' '
+        {
+            gsub(/[^0-9]/, "", $3)
+            total += $3
+        }
+        END {
+            print total
+        }
+    ' "$HISTORY_FILE"
+)"
+
+    echo
+    echo "📊 Summary"
+    echo "   Sessions: $TOTAL_SESSIONS"
+    echo "   Total time: ${TOTAL_MINUTES} minute(s)"
 }
