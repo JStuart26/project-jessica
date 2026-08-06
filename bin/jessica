@@ -14,18 +14,9 @@ done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" >/dev/null 2>&1 && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
-source "$PROJECT_ROOT/lib/ui.sh"
+source "$PROJECT_ROOT/lib/kernel.sh"
 
-source "$PROJECT_ROOT/commands/help.sh"
-source "$PROJECT_ROOT/commands/dashboard.sh"
-source "$PROJECT_ROOT/commands/next.sh"
-source "$PROJECT_ROOT/commands/note.sh"
-source "$PROJECT_ROOT/commands/done.sh"
-source "$PROJECT_ROOT/commands/history.sh"
-source "$PROJECT_ROOT/commands/projects.sh"
-source "$PROJECT_ROOT/commands/remember.sh"
-source "$PROJECT_ROOT/commands/add.sh"
-
+initialize_kernel
 
 ###############################################################################
 # Jessica OS - Personal AI Development Lab
