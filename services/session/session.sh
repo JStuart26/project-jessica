@@ -1,10 +1,16 @@
 #!/bin/bash
 
 start_session_service() {
+    SESSION_FILE="$PROJECT_ROOT/data/state/session.conf"
     SESSION_START_TIME="$(date '+%Y-%m-%d %H:%M:%S')"
 
-    echo "SESSION_START_TIME=\"$SESSION_START_TIME\"" \
-        > "$PROJECT_ROOT/data/state/session.conf"
+    if [ -f "$SESSION_FILE" ]; then
+    echo "🟡 Session already active."
+    return 0
+    fi
+
+
+    echo "SESSION_START_TIME=\"$SESSION_START_TIME\"" > "$SESSION_FILE"
 
     echo "✅ Session started at $SESSION_START_TIME"
 }
@@ -19,18 +25,40 @@ show_session_status_service() {
 
     source "$SESSION_FILE"
 
+    START_EPOCH="$(date -d "$SESSION_START_TIME" +%s)"
+    NOW_EPOCH="$(date +%s)"
+    ELAPSED_SECONDS=$((NOW_EPOCH - START_EPOCH))
+    ELAPSED_MINUTES=$((ELAPSED_SECONDS / 60))
+
     echo "🟢 Session active."
     echo "   Started: $SESSION_START_TIME"
+    echo "   Elapsed: $ELAPSED_MINUTES minutes"
 }
 
 end_session_service() {
     SESSION_FILE="$PROJECT_ROOT/data/state/session.conf"
+    HISTORY_FILE="$PROJECT_ROOT/data/sessions/history.log"
 
     if [ ! -f "$SESSION_FILE" ]; then
         echo "🔴 No active session to end."
         return 0
     fi
 
+    source "$SESSION_FILE"
+
+    SESSION_END_TIME="$(date '+%Y-%m-%d %H:%M:%S')"
+
+    START_EPOCH="$(date -d "$SESSION_START_TIME" +%s)"
+    END_EPOCH="$(date -d "$SESSION_END_TIME" +%s)"
+    DURATION_SECONDS=$((END_EPOCH - START_EPOCH))
+    DURATION_MINUTES=$((DURATION_SECONDS / 60))
+
+    mkdir -p "$(dirname "$HISTORY_FILE")"
+
+    echo "$SESSION_START_TIME | $SESSION_END_TIME | ${DURATION_MINUTES} minute(s)" \
+        >> "$HISTORY_FILE"
+
     rm "$SESSION_FILE"
-    echo "❎ Session ended."
+
+    echo "❎ Session ended at $SESSION_END_TIME"
 }
