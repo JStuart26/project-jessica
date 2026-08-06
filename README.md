@@ -1,4 +1,4 @@
-# Project Jessica
+# Jessica OS
 
 > Built one lesson at a time.
 

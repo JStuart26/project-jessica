@@ -1,4 +1,4 @@
-# Current Project Jessica Session
+# Current Jessica OS Session
 
 ## Date
 

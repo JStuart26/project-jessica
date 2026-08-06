@@ -1,4 +1,4 @@
-# Project Jessica Vision
+# Jessica OS Vision
 
 ## Long-Term Goal
 

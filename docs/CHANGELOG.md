@@ -51,3 +51,6 @@
 
 - Confirm the full workflow from outside the home network
 
+### Name Chnage
+
+- Changed from Project Jessica to Jessica OS

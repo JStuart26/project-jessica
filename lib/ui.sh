@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TITLE="${1:-Project Jessica}"
+TITLE="${1:-Jessica OS}"
 VERSION="${2:-0.5.5}"
 
 ui_header() {
