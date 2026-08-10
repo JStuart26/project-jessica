@@ -11,5 +11,10 @@ show_help() {
     echo "  jessica history      Show project history"
     echo "  jessica projects     Show the project dashboard"
     echo "  jessica help         Show this command list"
+    echo "  jessica start       Start a development session"
+    echo "  jessica status      Show the active session status"
+    echo "  jessica end [note]  End the session and optionally save a note"
+    echo "  jessica shistory    Show completed session history"
     echo
+
 }
