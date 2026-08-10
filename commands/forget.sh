@@ -1,6 +1,6 @@
 #!bin/bash
 
-remember() {
+forget() {
     source "$PROJECT_ROOT/services/memory/memory.sh"
-    remember_value_service "$1" "$2"
+    forget_value_service "$1"
 }

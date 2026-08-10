@@ -15,6 +15,10 @@ show_help() {
     echo "  jessica status      Show the active session status"
     echo "  jessica end [note]  End the session and optionally save a note"
     echo "  jessica shistory    Show completed session history"
+    echo "  jessica remember <key> <value>  Save a value in memory"
+    echo "  jessica recall <key>              Recall a value from memory"
+    echo "  jessica forget <key>              Forget a value from memory"
+    echo "  jessica memories                  Show all saved memories"
     echo
 
 }

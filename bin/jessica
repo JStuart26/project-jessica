@@ -87,6 +87,20 @@ case "${1:-}" in
     show_session_history
     ;;
 
+    recall)
+    shift
+    recall "$@"
+    ;;
+
+    memories)
+    show_memories
+    ;;
+
+    forget)
+    shift
+    forget "$@"
+    ;;
+    
     *)
         echo "❌ Unknown command: $1"
         show_help
