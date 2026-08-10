@@ -20,7 +20,7 @@ initialize_kernel
 
 ###############################################################################
 # Jessica OS - Personal AI Development Lab
-# Version: 0.5.5
+# Version: 0.6.0
 #
 # Purpose:
 #   Prepare the development workspace and verify that the environment

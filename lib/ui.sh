@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TITLE="${1:-Jessica OS}"
-VERSION="${2:-0.5.5}"
+VERSION="${2:-0.6.0}"
 
 ui_header() {
 
