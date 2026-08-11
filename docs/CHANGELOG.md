@@ -54,3 +54,13 @@
 ### Name Chnage
 
 - Changed from Project Jessica to Jessica OS
+
+### Home Assistant smart home infrastructure
+
+- Home Assistant
+- Mosquitto
+- Govee2MQTT
+- Matter Server
+- Ecobee
+- Govee lights
+- Matter plugs

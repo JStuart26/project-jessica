@@ -1,0 +1,19 @@
+# Runtime state
+data/state/session.conf
+data/state/memory.conf
+
+# Home Assistant generated config/state
+docker/homeassistant/config/
+
+# MQTT credentials
+docker/mosquitto/config/passwords
+
+# Govee credentials
+docker/govee2mqtt/.env
+
+# Matter runtime state
+docker/matter/data/
+
+# Mosquitto runtime state
+docker/mosquitto/data/
+docker/mosquitto/log/
