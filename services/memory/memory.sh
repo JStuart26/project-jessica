@@ -54,6 +54,7 @@ show_memories_service() {
 
     memory_file_list_latest | while IFS='=' read -r KEY VALUE; do
         echo "• $KEY: $VALUE"
+        echo
     done
 }
 

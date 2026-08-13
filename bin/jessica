@@ -17,6 +17,7 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 source "$PROJECT_ROOT/lib/kernel.sh"
 
 initialize_kernel
+update_last_interaction_service
 
 ###############################################################################
 # Jessica OS - Personal AI Development Lab
