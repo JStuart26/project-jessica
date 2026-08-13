@@ -19,6 +19,9 @@ show_help() {
     echo "  jessica recall <key>              Recall a value from memory"
     echo "  jessica forget <key>              Forget a value from memory"
     echo "  jessica memories                  Show all saved memories"
+    echo "  jessica add <key> <value>          Add a value to memory"
+    echo "  jessica mode <value>              Set the session mode"
+    echo "  jessica context <value>           Set the session context"
     echo
 
 }

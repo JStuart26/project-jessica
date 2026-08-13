@@ -101,7 +101,17 @@ case "${1:-}" in
     shift
     forget "$@"
     ;;
-    
+
+    mode)
+    shift
+    cmd_mode "$@"
+    ;;
+
+    context)
+    shift
+    cmd_context "$@"
+    ;;
+
     *)
         echo "❌ Unknown command: $1"
         show_help

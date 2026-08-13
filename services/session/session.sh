@@ -149,3 +149,37 @@ show_session_history_service() {
     echo "   Sessions: $TOTAL_SESSIONS"
     echo "   Total time: ${TOTAL_HOURS} hour(s), ${REMAINING_MINUTES} minute(s)"
 }
+
+set_session_mode_service() {
+    SESSION_FILE="$PROJECT_ROOT/data/state/session.conf"
+
+    if [ ! -f "$SESSION_FILE" ]; then
+        echo "No active session."
+        return 1
+    fi
+
+    NEW_MODE="$1"
+
+    sed -i \
+        "s|^CURRENT_MODE=.*|CURRENT_MODE=\"$NEW_MODE\"|" \
+        "$SESSION_FILE"
+
+    echo "Session mode set to: $NEW_MODE"
+}
+
+set_session_context_service() {
+    SESSION_FILE="$PROJECT_ROOT/data/state/session.conf"
+
+    if [ ! -f "$SESSION_FILE" ]; then
+        echo "No active session."
+        return 1
+    fi
+
+    NEW_CONTEXT="$1"
+
+    sed -i \
+        "s|^CURRENT_CONTEXT=.*|CURRENT_CONTEXT=\"$NEW_CONTEXT\"|" \
+        "$SESSION_FILE"
+
+    echo "Session context set to: $NEW_CONTEXT"
+}
