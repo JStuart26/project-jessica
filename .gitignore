@@ -17,3 +17,6 @@ docker/matter/data/
 # Mosquitto runtime state
 docker/mosquitto/data/
 docker/mosquitto/log/
+
+# Secrets
+config/secrets/

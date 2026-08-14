@@ -89,8 +89,7 @@ end_session_service() {
 
     mkdir -p "$(dirname "$HISTORY_FILE")"
 
-    echo "$SESSION_START_TIME | $SESSION_END_TIME | ${DURATION_MINUTES} minute(s) | $SESSION_NOTE" \
-    >> "$HISTORY_FILE"
+    echo "$SESSION_START_TIME | $SESSION_END_TIME | ${DURATION_MINUTES} minute(s) | $CURRENT_MODE | $CURRENT_CONTEXT | $SESSION_NOTE" >> "$HISTORY_FILE"
 
     rm "$SESSION_FILE"
 
@@ -108,15 +107,19 @@ show_session_history_service() {
     echo "📚 Session History"
     echo
 
-    tac "$HISTORY_FILE" | while IFS='|' read -r START_TIME END_TIME DURATION NOTE; do
+    tac "$HISTORY_FILE" | while IFS='|' read -r START_TIME END_TIME DURATION MODE CONTEXT NOTE; do
         START_TIME="$(echo "$START_TIME" | xargs)"
         END_TIME="$(echo "$END_TIME" | xargs)"
         DURATION="$(echo "$DURATION" | xargs)"
+        MODE="$(echo "$MODE" | xargs)"
+        CONTEXT="$(echo "$CONTEXT" | xargs)"
         NOTE="$(echo "$NOTE" | xargs)"
 
         echo "🗓️  Started:  $START_TIME"
         echo "🏁 Ended:    $END_TIME"
         echo "⏱️  Duration: $DURATION"
+        echo "🛠️  Mode:     $MODE"
+        echo "📂 Context:  $CONTEXT"
 
         if [ -n "$NOTE" ]; then
         echo "📝 Note:     $NOTE"

@@ -112,6 +112,10 @@ case "${1:-}" in
     cmd_context "$@"
     ;;
 
+    home)
+    cmd_home "$@"
+    ;;
+
     *)
         echo "❌ Unknown command: $1"
         show_help
