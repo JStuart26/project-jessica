@@ -22,6 +22,8 @@ show_help() {
     echo "  jessica add <key> <value>          Add a value to memory"
     echo "  jessica mode <value>              Set the session mode"
     echo "  jessica context <value>           Set the session context"
+    echo "  jessica home <value>              Set the session home directory"
+    echo "  jessica ask <message>              Ask a question to the AI"
     echo
 
 }
